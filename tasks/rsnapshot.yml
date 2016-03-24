@@ -1,0 +1,16 @@
+- name: Install rsnapshot
+  apt: name=rsnapshot state=present
+
+- name: Ensure backupuser exists
+  user: name=backuppuller generate_ssh_key=yes
+
+- name: Create /etc/rsnapshot directory
+  file: path=/etc/rsnapshot state=directory
+
+- template: src=rsnapshot.conf dest=/etc/rsnapshot/rsnapshot-{{ item.name }}.conf
+  with_items: "{{ rsnapshot_backups }}"
+
+- template: src=rsnapshot-run.sh dest=/etc/rsnapshot/rsnapshot-run.sh mode=700
+
+- template: src=cronjob dest=/etc/cron.d/rsnapshot-pull
+  when: rsnapshot_enable_cron

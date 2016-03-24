@@ -1,0 +1,10 @@
+SHELL=/bin/bash
+# append both stdout and stderr to log, but only output stdout (src: https://stackoverflow.com/questions/692000/how-do-i-write-stderr-to-a-file-while-using-tee-with-a-pipe)
+# this syntax only works with bash!
+*/5 * * * * root /etc/rsnapshot/rsnapshot-run.sh > >(tee -a /var/log/rsnapshot.log >/dev/null) 2> >(tee -a /var/log/rsnapshot.log >&2)
+
+{% for backup in rsnapshot_backups %}
+{% for entry in backup.retain_settings %}
+{{ entry.cronjob }} root rsnapshot -c /etc/rsnapshot/rsnapshot-{{ backup.name }}.conf {{ entry.name }}
+{% endfor %}
+{% endfor %}
