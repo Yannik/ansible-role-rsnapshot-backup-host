@@ -7,7 +7,10 @@
 - name: Create /etc/rsnapshot directory
   file: path=/etc/rsnapshot state=directory
 
-- template: src=rsnapshot.conf dest=/etc/rsnapshot/rsnapshot-{{ item.name }}.conf
+- template:
+    src: rsnapshot.conf
+    dest: /etc/rsnapshot/rsnapshot-{{ item.name }}.conf
+    validate: 'rsnapshot -c %s configtest'
   with_items: "{{ rsnapshot_backups }}"
 
 - template: src=rsnapshot-run.sh dest=/etc/rsnapshot/rsnapshot-run.sh mode=700
