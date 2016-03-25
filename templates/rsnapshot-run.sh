@@ -34,7 +34,7 @@ else
   lastsync=0
 fi
 currtime=$(date +%s)
-timediff=`expr $currtime - $lastsync`
+timediff=`expr $currtime - $lastsync + 5`
 synctime=$(date +%s)
 if [ "$timediff" -gt "$intervalsecs" ]; then
   log_info "Running sync for {{ backup.name }}"
