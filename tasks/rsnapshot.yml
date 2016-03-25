@@ -28,3 +28,12 @@
   file: path=/etc/cron.d/rsnapshot-pull state=absent
   when: not rsnapshot_enable_cron
 
+# TODO: This should only check a host once (at the moment it checks it multiple times if multiple backups are pulled from the host)
+- name: Check that ssh to hosts works
+  shell: ssh -o BatchMode=yes -o UserKnownHostsFile=/home/backuppuller/.ssh/known_hosts -i /home/backuppuller/.ssh/id_rsa {{ item.1.src|regex_replace('^(.*):/.*', '\1') }} test
+  with_subelements:
+    - "{{ rsnapshot_backups }}"
+    - backup_directives
+  when: item.1.src | match('.+@.+:') and item.1.type|default() != 'script'
+  changed_when: False
+  tags: work
