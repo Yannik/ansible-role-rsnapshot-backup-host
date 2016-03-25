@@ -12,5 +12,10 @@
 
 - template: src=rsnapshot-run.sh dest=/etc/rsnapshot/rsnapshot-run.sh mode=700
 
-- template: src=cronjob dest=/etc/cron.d/rsnapshot-pull
+- name: Create rsnapshot cronjob (if enabled in config)
+  template: src=cronjob dest=/etc/cron.d/rsnapshot-pull
   when: rsnapshot_enable_cron
+
+- name: Remove rsnapshot cronjob (if disabled in config)
+  file: path=/etc/cron.d/rsnapshot-pull state=absent
+  when: not rsnapshot_enable_cron
