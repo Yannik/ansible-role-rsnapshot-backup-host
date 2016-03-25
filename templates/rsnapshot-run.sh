@@ -1,6 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # this is called every 5 minutes
+
+set -o errexit
 
 function log_info {
   msg=$1
@@ -17,7 +19,6 @@ function log_error {
 log_info "Starting ${0}..."
 
 {% for backup in rsnapshot_backups %}
-{# backup.interval handling #}
 intervalint={{ backup.interval | replace('every', '') | regex_replace ('[^0-9]*', '') }}
 intervalunit="{{ backup.interval | replace('every', '') | regex_replace('[0-9]*', '') }}"
 if [ "$intervalunit" == "min" ]; then

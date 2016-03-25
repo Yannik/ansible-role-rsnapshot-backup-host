@@ -19,3 +19,4 @@
 - name: Remove rsnapshot cronjob (if disabled in config)
   file: path=/etc/cron.d/rsnapshot-pull state=absent
   when: not rsnapshot_enable_cron
+
