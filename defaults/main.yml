@@ -1,2 +1,3 @@
 rsnapshot_backups: []
 rsnapshot_enable_cron: false
+rsnapshot_ssh_args: "-i /home/backuppuller/.ssh/id_rsa -o UserKnownHostsFile=/home/backuppuller/.ssh/known_hosts"
