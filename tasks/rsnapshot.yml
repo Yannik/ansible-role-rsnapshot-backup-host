@@ -34,6 +34,6 @@
   with_subelements:
     - "{{ rsnapshot_backups }}"
     - backup_directives
-  when: item.1.src | match('.+@.+:') and item.1.type|default() != 'script'
+  when: item.1.src | match('.+@.+:') and item.1.type|default() != 'script' and testing is not defined
   changed_when: False
   tags: work
