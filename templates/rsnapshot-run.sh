@@ -19,6 +19,7 @@ function log_error {
 log_info "Starting ${0}..."
 
 {% for backup in rsnapshot_backups %}
+{% if backup.state|default('enabled') == 'enabled' %}
 intervalint={{ backup.interval | replace('every', '') | regex_replace ('[^0-9]*', '') }}
 intervalunit="{{ backup.interval | replace('every', '') | regex_replace('[0-9]*', '') }}"
 if [ "$intervalunit" == "min" ]; then
@@ -55,6 +56,7 @@ if [ "$timediff" -gt "$intervalsecs" ]; then
     log_info "Successfully synced {{ backup.name }}"
   fi
 fi
+{% endif %}
 {% endfor %}
 if [ "$failedjobs" == 1 ]; then
   exit 1

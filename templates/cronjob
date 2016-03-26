@@ -9,7 +9,10 @@ MAILTO={{ rsnapshot_mailto }}
 */5 * * * * root /etc/rsnapshot/rsnapshot-run.sh > >(tee -a /var/log/rsnapshot.log >/dev/null) 2> >(tee -a /var/log/rsnapshot.log >&2)
 
 {% for backup in rsnapshot_backups %}
+{% if backup.state|default('enabled') == 'enabled' %}
 {% for entry in backup.retain_settings %}
 {{ entry.cronjob }} root rsnapshot -c /etc/rsnapshot/rsnapshot-{{ backup.name }}.conf {{ entry.name }}
 {% endfor %}
+
+{% endif %}
 {% endfor %}
