@@ -29,7 +29,7 @@
   when: not rsnapshot_enable_cron
 
 - name: Check that ssh to hosts works
-  shell: ssh -o BatchMode=yes {{ rsnapshot_ssh_args }} {{ item.backup_host }} test
+  shell: ssh -o BatchMode=yes -o ConnectTimeout=2 {{ rsnapshot_ssh_args }} {{ item.backup_host }} test
   with_items: "{{ rsnapshot_backups }}"
   when: item.backup_host is defined and testing is not defined
   changed_when: False
