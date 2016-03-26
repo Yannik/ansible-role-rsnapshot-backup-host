@@ -13,23 +13,25 @@
       - name: backups1
         interval: every30min
         snapshot_root: /var/rsnapshot-backups/backups1
+        backup_host: backupro@example.org
         retain_settings:
           - { name: every1h, keep: 12, cronjob: "30 * * * *" }
           - { name: every1d, keep: 3, cronjob: "35 3 * * *" }
           - { name: every1w, keep: 4, cronjob: "0 3 * * 1" }
         backup_directives:
-          - src: backupro@example.org:/etc
-          - src: backupro@example.org:/var/www
+          - src: /etc
+          - src: /var/www
             args: exclude=logs,exclude=vendor,+rsync_long_args=--bwlimit=625
           - src: /usr/bin/ssh {{ rsnapshot_ssh_args }} backupro@example.org "sudo /etc/rsnapshot/backup-scripts/backup-mysql.sh"
             type: script
-          - src: backupro@example.org:/var/rsnapshot-backup/mysqldump.sql.gz
+          - src: /var/rsnapshot-backup/mysqldump.sql.gz
       - name: backups2
-        snapshot_root: /var/rsnapshot-backups/backups2
         interval: every6h
+        snapshot_root: /var/rsnapshot-backups/backups2
+        backup_host: backupro@example2.org
         retain_settings:
           - { name: every1d, keep: 3, cronjob: "35 3 * * *" }
           - { name: every1w, keep: 4, cronjob: "0 3 * * 1" }
         backup_directives:
-          - src: backupro@example.org:/etc
+          - src: /etc
             dest: myetc
