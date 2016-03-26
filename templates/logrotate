@@ -1,0 +1,9 @@
+/var/log/rsnapshot.log {
+    missingok
+    notifempty
+    size 1k
+    rotate 5
+    compress
+    dateext
+    create 0600 root root
+}

@@ -33,3 +33,6 @@
   with_items: "{{ rsnapshot_backups }}"
   when: item.backup_host is defined and testing is not defined
   changed_when: False
+
+- name: Setup logrotation
+  template: src=logrotate dest=/etc/logrotate.d/rsnapshot
