@@ -19,7 +19,7 @@ function log_error {
 log_info "Starting ${0}..."
 
 {% for backup in rsnapshot_backups %}
-{% if backup.state|default('enabled') == 'enabled' %}
+{% if backup.enabled|default(True) %}
 intervalint={{ backup.interval | replace('every', '') | regex_replace ('[^0-9]*', '') }}
 intervalunit="{{ backup.interval | replace('every', '') | regex_replace('[0-9]*', '') }}"
 if [ "$intervalunit" == "min" ]; then

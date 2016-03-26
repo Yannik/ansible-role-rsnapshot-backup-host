@@ -20,6 +20,7 @@ Role Variables
       * Currently supported options: `rsync_long_args`
   * `rsnapshot_backups`: List of backup sets
       * `name`: unique lowercase alphanumeric name (required)
+      * `enabled`: yes/no
       * `interval`: how often should the data be synced (required)
           * options: `every30min, every1h, every3h, every6h, every12h, every24h`
       * `snapshot_root`: unique path where the backups will be saved (required)

@@ -12,7 +12,7 @@
     src: rsnapshot.conf
     dest: /etc/rsnapshot/rsnapshot-{{ item.name }}.conf
     validate: 'rsnapshot -c %s configtest'
-  when: item.state|default('enabled') == 'enabled'
+  when: item.enabled|default(True)
   with_items: "{{ rsnapshot_backups }}"
 
 - name: Add rsnapshot-run.sh script
@@ -32,7 +32,7 @@
 - name: Check that ssh to hosts works
   shell: ssh -o BatchMode=yes -o ConnectTimeout=1 {{ rsnapshot_ssh_args }} {{ item.backup_host }} test
   with_items: "{{ rsnapshot_backups }}"
-  when: item.backup_host is defined and item.state|default('enabled') == 'enabled' and testing is not defined
+  when: item.backup_host is defined and item.enabled|default(True) and testing is not defined
   changed_when: False
 
 - name: Setup logrotation
