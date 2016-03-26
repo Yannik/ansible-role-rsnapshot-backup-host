@@ -1,6 +1,6 @@
 galaxy_info:
   author: Yannik Sembritzki
-  description: 
+  description: Make incremental backups securely using rsnapshot.
   
   license: GPLv2
   
