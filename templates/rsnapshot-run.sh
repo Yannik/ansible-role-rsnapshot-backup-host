@@ -17,6 +17,8 @@ function log_error {
 }
 
 log_info "Starting ${0}..."
+#Sleep a few seconds to not collide with rotating cronjobs that start at the full minute too
+sleep 3
 
 {% for backup in rsnapshot_backups %}
 {% if backup.enabled|default(True) %}
