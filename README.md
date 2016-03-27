@@ -4,6 +4,9 @@ Description
 
 Make incremental backups securely using rsnapshot.
 
+#### Why should backups always be pulled instead of being pushed?
+Because pushing backups is highly [insecure](https://news.ycombinator.com/item?id=8621792).
+
 
 Requirements
 ------------
@@ -71,6 +74,12 @@ Example Playbook
                  - src: /etc
                    dest: myetc
 
+Inspired by
+-------
+  * [Backup remote Linux hosts without root access, using rsnapshot](http://dev.kprod.net/?q=linux-backup-rsnapshot-no-root)
+  * [Restricting SSH Access to rsync](https://www.guyrutenberg.com/2014/01/14/restricting-ssh-access-to-rsync/)
+  * [rsync as root with rrsync and sudo](https://www.v13.gr/blog/?p=216)
+  * [Root, Sudo, and Rsnapshot](http://technokracy.net/2011/01/07/root_sudo_rsnapshot/)
 
 License
 -------
