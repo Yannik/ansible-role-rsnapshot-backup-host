@@ -1,7 +1,7 @@
 /var/log/rsnapshot.log {
     missingok
     notifempty
-    size 1k
+    size 500k
     rotate 5
     compress
     dateext
