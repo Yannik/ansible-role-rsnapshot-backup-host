@@ -3,6 +3,7 @@
 # this is called every 5 minutes
 
 set -o errexit
+set -o nounset
 
 function log_info {
   msg=$1
