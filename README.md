@@ -80,6 +80,10 @@ Inspired by
   * [Restricting SSH Access to rsync](https://www.guyrutenberg.com/2014/01/14/restricting-ssh-access-to-rsync/)
   * [rsync as root with rrsync and sudo](https://www.v13.gr/blog/?p=216)
   * [Root, Sudo, and Rsnapshot](http://technokracy.net/2011/01/07/root_sudo_rsnapshot/)
+  * [OpenSSH: Going flexible with forced commands](http://binblog.info/2008/10/20/openssh-going-flexible-with-forced-commands/)
+  * [Ausführbare SSH-Kommandos per authorized keys einschränken](https://www.thomas-krenn.com/de/wiki/Ausf%C3%BChrbare_SSH-Kommandos_per_authorized_keys_einschr%C3%A4nken)
+  * [Securing Rsync as Root](http://www.ullright.org/ullWiki/show/secure-rsync-via-ssh-as-root)
+  * [Security of only allowing a few vetted commands using $SSH_ORIGINAL_COMMAND](https://security.stackexchange.com/questions/118688/)
 
 License
 -------
