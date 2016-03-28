@@ -25,9 +25,9 @@ sleep 3
 intervalint={{ backup.interval | replace('every', '') | regex_replace ('[^0-9]*', '') }}
 intervalunit="{{ backup.interval | replace('every', '') | regex_replace('[0-9]*', '') }}"
 if [ "$intervalunit" == "min" ]; then
-  intervalsecs=`expr $intervalint "*" 60`
+  let intervalsecs="$intervalint * 60"
 elif [ "$intervalunit" == "h" ]; then
-  intervalsecs=`expr $intervalint "*" 60 "*" 60`
+  let intervalsecs="$intervalint * 60 * 60"
 fi
 
 lastsync_file="/etc/rsnapshot/rsnapshot-{{ backup.name }}.lastsuccess"
@@ -37,7 +37,7 @@ else
   lastsync=0
 fi
 currtime=$(date +%s)
-timediff=`expr $currtime - $lastsync + 5`
+let timediff="$currtime - $lastsync + 5"
 synctime=$(date +%s)
 if [ "$timediff" -gt "$intervalsecs" ]; then
   log_info "Attempting sync for {{ backup.name }}"
@@ -47,7 +47,7 @@ if [ "$timediff" -gt "$intervalsecs" ]; then
   while [ -f "$pidfile" ] && kill -0 $(cat "$pidfile") && [ $sleeptime -lt $maxsleeptime ]; do
     log_info "rsnapshot for {{ backup.name }} is already running (probably rotating)"
     sleep 5
-    sleeptime=`expr $sleeptime + 5`
+    let sleeptime="$sleeptime + 5"
   done
   log_info "Running sync for {{ backup.name }}"
   if ! rsnapshot -c /etc/rsnapshot/rsnapshot-{{ backup.name }}.conf sync; then
