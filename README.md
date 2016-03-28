@@ -11,7 +11,7 @@ Because pushing backups is highly [insecure](https://news.ycombinator.com/item?i
 Requirements
 ------------
 
-`rsnapshot-remote-host` must be installed on the hosts that should be backed up.
+[`rsnapshot-remote-host`](https://github.com/Yannik/ansible-role-rsnapshot-remote-host) must be installed on the hosts that should be backed up.
 
 Role Variables
 --------------
