@@ -17,6 +17,21 @@ function log_error {
   >&2 echo "$date [$$] $msg"
 }
 
+function time_to_secs {
+  local val=$1
+  local valnum=$(echo "$val" | sed 's/[^0-9]//g')
+  local secs=0
+
+  if [[ "$val" == *min ]]; then
+    let secs="$valnum * 60"
+  elif [[ "$val" == *h ]]; then
+    let secs="$valnum * 60 * 60"
+  elif [[ "$val" == *d ]]; then
+    let secs="$valnum * 60 * 60 * 24"
+  fi
+  echo "$secs"
+}
+
 log_info "Starting ${0}..."
 # Sleep a few seconds to not collide with rotating cronjobs starting at the full minute too
 sleep 3
@@ -24,14 +39,7 @@ failedjob=0
 
 {% for backup in rsnapshot_backups %}
 {% if backup.enabled|default(True) %}
-intervalint={{ backup.interval | replace('every', '') | regex_replace ('[^0-9]*', '') }}
-intervalunit="{{ backup.interval | replace('every', '') | regex_replace('[0-9]*', '') }}"
-
-if [ "$intervalunit" == "min" ]; then
-  let intervalsecs="$intervalint * 60"
-elif [ "$intervalunit" == "h" ]; then
-  let intervalsecs="$intervalint * 60 * 60"
-fi
+intervalsecs=$(time_to_secs "{{ backup.interval | replace('every', '') }}")
 
 lastsync_file="/etc/rsnapshot/rsnapshot-{{ backup.name }}.lastsuccess"
 
