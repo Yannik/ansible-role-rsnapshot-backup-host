@@ -29,6 +29,7 @@ Role Variables
       * `snapshot_root`: unique path where the backups will be saved (required)
       * `backup_host`: backupro@host from where the backups should be pulled from
       * `retain_settings`: list of backups that should be kept (required)
+      * `maxdowntime`: maximum time a host is allowed to be down (format: 6h, 12d)
       * `backup_directives`: the actual list of directories that should be backed up (required)
           * `src`: Source directory (required)
           * `dest`: destination directory, by default the src path appended to `snapshot_root/`  (optional)

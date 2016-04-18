@@ -39,6 +39,7 @@ failedjob=0
 
 {% for backup in rsnapshot_backups %}
 {% if backup.enabled|default(True) %}
+host="{{ backup.backup_host|default('') }}"
 intervalsecs=$(time_to_secs "{{ backup.interval | replace('every', '') }}")
 
 lastsync_file="/etc/rsnapshot/rsnapshot-{{ backup.name }}.lastsuccess"
@@ -52,10 +53,26 @@ fi
 currtime=$(date +%s)
 let timediff="$currtime - $lastsync + 5"
 
+function run_sync {
+  log_info "Running sync for {{ backup.name }}"
+  if ! rsnapshot -c /etc/rsnapshot/rsnapshot-{{ backup.name }}.conf sync; then
+    log_error "Failed backup {{ backup.name }}"
+    failedjob=1
+  else
+    echo "$currtime" > "$lastsync_file"
+    log_info "Successfully synced {{ backup.name }}"
+  fi
+}
+
 if [ "$timediff" -gt "$intervalsecs" ]; then
   pidfile="/var/run/rsnapshot-{{ backup.name }}.pid"
   sleeptime=0
+  downtime=0
   maxsleeptime=60
+  maxdowntime=$(time_to_secs "{{ backup.max_downtime|default(0) }}")
+  lastuptimefile="/etc/rsnapshot/rsnapshot-{{ backup.name }}.lastuptime"
+  lastuptime=$(cat "$lastuptimefile" 2>/dev/null || echo 0 )
+  let downtime="$currtime - $lastuptime"
 
   log_info "Attempting sync for {{ backup.name }}"
 
@@ -65,14 +82,14 @@ if [ "$timediff" -gt "$intervalsecs" ]; then
     sleep 5
   done
 
-  log_info "Running sync for {{ backup.name }}"
-  if ! rsnapshot -c /etc/rsnapshot/rsnapshot-{{ backup.name }}.conf sync; then
-    log_error "Failed backup {{ backup.name }}"
-    failedjob=1
+  if ssh -q -o BatchMode=yes -o ConnectTimeout=1 {{ rsnapshot_ssh_args }} "$host" test || \
+  [ $downtime -gt $maxdowntime ]; then
+    echo $currtime > "$lastuptimefile"
+    run_sync
   else
-    echo "$currtime" > "$lastsync_file"
-    log_info "Successfully synced {{ backup.name }}"
+    log_info "SSH connect to host failed"
   fi
+
 fi
 {% endif %}
 {% endfor %}
