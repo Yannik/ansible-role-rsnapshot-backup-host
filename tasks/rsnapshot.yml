@@ -34,6 +34,7 @@
   with_items: "{{ rsnapshot_backups }}"
   when: item.backup_host is defined and item.enabled|default(True) and testing is not defined
   changed_when: False
+  ignore_errors: yes
 
 - name: Setup logrotation
   template: src=logrotate dest=/etc/logrotate.d/rsnapshot
