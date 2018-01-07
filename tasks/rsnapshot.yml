@@ -1,6 +1,11 @@
 - name: Install rsnapshot
   apt: name=rsnapshot state=present
 
+- name: Patch rsnapshot to report rsync errors
+  patch:
+    src: show_rsync_errors.patch
+    dest: /usr/bin/rsnapshot
+
 - name: Ensure backupuser exists
   user: name=backuppuller generate_ssh_key=yes
 
