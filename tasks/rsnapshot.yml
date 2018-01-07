@@ -5,6 +5,7 @@
   patch:
     src: show_rsync_errors.patch
     dest: /usr/bin/rsnapshot
+  when: not (ansible_distribution == "Ubuntu" and ansible_distribution_major_version < '16')
 
 - name: Ensure backupuser exists
   user: name=backuppuller generate_ssh_key=yes
