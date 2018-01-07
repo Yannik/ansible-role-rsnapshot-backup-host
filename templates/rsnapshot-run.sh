@@ -76,13 +76,9 @@ if [ "$timediff" -gt "$intervalsecs" ]; then
 
   log_info "Attempting sync for {{ backup.name }}"
 
-  while [ -f "$pidfile" ] && kill -0 $(cat "$pidfile") && [ $sleeptime -lt $maxsleeptime ]; do
-    log_info "rsnapshot for {{ backup.name }} is already running (probably rotating)"
-    let sleeptime="$sleeptime + 5"
-    sleep 5
-  done
-
-  if ssh -q -o BatchMode=yes -o ConnectTimeout=1 {{ rsnapshot_ssh_args }} "$host" test || \
+  if [ -f "$pidfile" ] && kill -0 $(cat "$pidfile"); then
+    log_info "rsnapshot for {{ backup.name }} is already running (either rotating or syncing)"
+  elif ssh -q -o BatchMode=yes -o ConnectTimeout=1 {{ rsnapshot_ssh_args }} "$host" test || \
   [ $downtime -gt $maxdowntime ]; then
     echo $currtime > "$lastuptimefile"
     run_sync
