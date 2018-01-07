@@ -1,2 +1,2 @@
-- include: rsnapshot.yml
+- import_tasks: rsnapshot.yml
   tags: rsnapshot
