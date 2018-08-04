@@ -1,5 +1,8 @@
-- name: Install rsnapshot
-  apt: name=rsnapshot state=present
+- name: Install required packages
+  apt: name={{ item }} state=present
+  with_items:
+    - rsnapshot
+    - patch
 
 - name: Patch rsnapshot to report rsync errors
   patch:
