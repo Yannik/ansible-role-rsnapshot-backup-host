@@ -17,7 +17,7 @@ Role Variables
 --------------
 
   * `rsnapshot_enable_cron`: whether to run backups automatically
-      * Default: `False`
+      * Default: `true`
   * `rsnapshot_mailto`: where email reports should go to
   * `rsnapshot_custom_directives`: set custom `rsnapshot.conf` options
       * Currently supported options: `rsync_long_args`
