@@ -1,9 +1,8 @@
 ---
 language: python
-python: "2.7"
 
 become: true
-dist: trusty
+dist: bionic
 
 addons:
   apt:
