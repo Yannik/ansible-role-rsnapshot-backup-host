@@ -61,8 +61,8 @@ Example Playbook
                  - src: /etc
                  - src: /var/www
                    args: exclude=logs,exclude=vendor,+rsync_long_args=--bwlimit=625
-                 - src: /usr/bin/ssh {{ rsnapshot_ssh_args }} backupro@example.org "sudo /etc/rsnapshot/backup-scripts/backup-mysql.sh"
-                   type: script
+                 - src: "sudo /etc/rsnapshot/backup-scripts/backup-mysql.sh"
+                   type: ssh
                  - src: /var/rsnapshot-backup/mysqldump.sql.gz
              - name: backups2
                interval: every6h
