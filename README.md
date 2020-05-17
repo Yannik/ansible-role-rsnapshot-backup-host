@@ -75,6 +75,11 @@ Example Playbook
                  - src: /etc
                    dest: myetc
 
+Debugging
+---------
+  * `ssh -F /home/backuppuller/.ssh/config backupro@host test` 
+  * `rsync -a --rsh="/usr/bin/ssh -F /home/backuppuller/.ssh/config" backupro@host:/path-to-dir .`
+
 Inspired by
 -------
   * [Backup remote Linux hosts without root access, using rsnapshot](http://dev.kprod.net/?q=linux-backup-rsnapshot-no-root)
