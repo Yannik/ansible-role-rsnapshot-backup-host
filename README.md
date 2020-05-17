@@ -19,8 +19,7 @@ Role Variables
   * `rsnapshot_enable_cron`: whether to run backups automatically
       * Default: `true`
   * `rsnapshot_mailto`: where email reports should go to
-  * `rsnapshot_custom_directives`: set custom `rsnapshot.conf` options
-      * Currently supported options: `rsync_long_args`
+  * `rsnapshot_custom_options`: set custom `rsnapshot.conf` options (list of dicts as some options can be used multiple times)
   * `rsnapshot_backups`: List of backup sets
       * `name`: unique lowercase alphanumeric name (required)
       * `enabled`: yes/no
@@ -30,6 +29,7 @@ Role Variables
       * `backup_host`: backupro@host from where the backups should be pulled from
       * `retain_settings`: list of backups that should be kept (required)
       * `maxdowntime`: maximum time a host is allowed to be down (format: 6h, 12d)
+      * `custom_options`: custom options (list of dicts as some options can be used multiple times)
       * `backup_directives`: the actual list of directories that should be backed up (required)
           * `src`: Source directory (required)
           * `dest`: destination directory, by default the src path appended to `snapshot_root/`  (optional)
@@ -47,7 +47,7 @@ Example Playbook
            rsnapshot_enable_cron: True
            rsnapshot_mailto: test@example.org
            rsnapshot_custom_directives:
-             rsync_long_args: --delete --numeric-ids --relative --delete-excluded --bwlimit=625
+             - rsync_long_args: --delete --numeric-ids --relative --delete-excluded --bwlimit=625
            rsnapshot_backups:
              - name: backups1
                interval: every30min
