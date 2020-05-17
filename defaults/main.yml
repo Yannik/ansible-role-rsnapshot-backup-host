@@ -1,4 +1,11 @@
 rsnapshot_backups: []
 rsnapshot_enable_cron: true
-rsnapshot_ssh_args: "-i /home/backuppuller/.ssh/id_rsa -o UserKnownHostsFile=/home/backuppuller/.ssh/known_hosts -o StrictHostKeyChecking=no"
+rsnapshot_ssh_args: "-F /home/backuppuller/.ssh/config"
+rsnapshot_ssh_config:
+  IdentityFile: "/home/backuppuller/.ssh/id_rsa"
+  BatchMode: "yes"
+  UserKnownHostsFile: "/home/backuppuller/.ssh/known_hosts"
+  StrictHostKeyChecking: "yes"
+  HashKnownHosts: "no"
+
 rsnapshot_custom_directives: {}

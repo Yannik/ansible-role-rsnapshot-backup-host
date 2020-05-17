@@ -13,6 +13,11 @@
 - name: Ensure backupuser exists
   user: name=backuppuller generate_ssh_key=yes
 
+- name: Install backupuser ssh config
+  template:
+    src: ssh_config
+    dest: /home/backuppuller/.ssh/config
+
 - name: Create /etc/rsnapshot directory
   file: path=/etc/rsnapshot state=directory
 
@@ -39,7 +44,7 @@
   when: not rsnapshot_enable_cron
 
 - name: Check that ssh to hosts works
-  shell: ssh -o BatchMode=yes -o ConnectTimeout=1 {{ item.ssh_args|default(rsnapshot_ssh_args) }} {{ item.backup_host }} test
+  shell: ssh -o ConnectTimeout=1 {{ item.ssh_args|default(rsnapshot_ssh_args) }} {{ item.backup_host }} test
   with_items: "{{ rsnapshot_backups }}"
   when: item.backup_host is defined and item.enabled|default(True) and testing is not defined
   changed_when: False

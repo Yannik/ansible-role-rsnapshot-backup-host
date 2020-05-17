@@ -1,0 +1,3 @@
+{% for key, value in rsnapshot_ssh_config.items() %}
+{{ key }} {{ value }}
+{% endfor %}

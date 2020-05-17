@@ -78,7 +78,7 @@ if [ "$timediff" -gt "$intervalsecs" ]; then
 
   if [ -f "$pidfile" ] && kill -0 $(cat "$pidfile"); then
     log_info "rsnapshot for {{ backup.name }} is already running (either rotating or syncing)"
-  elif ssh -q -o BatchMode=yes -o ConnectTimeout=1 {{ rsnapshot_ssh_args }} "$host" test || \
+  elif ssh -q -o ConnectTimeout=1 {{ rsnapshot_ssh_args }} "$host" test || \
   [ $downtime -gt $maxdowntime ]; then
     echo $currtime > "$lastuptimefile"
     run_sync
