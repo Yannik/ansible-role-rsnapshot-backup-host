@@ -8,4 +8,5 @@ rsnapshot_ssh_config:
   StrictHostKeyChecking: "yes"
   HashKnownHosts: "no"
 
+rsnapshot_max_downtime: 0
 rsnapshot_custom_directives: {}

@@ -69,7 +69,7 @@ if [ "$timediff" -gt "$intervalsecs" ]; then
   sleeptime=0
   downtime=0
   maxsleeptime=60
-  maxdowntime=$(time_to_secs "{{ backup.max_downtime|default(0) }}")
+  maxdowntime=$(time_to_secs "{{ backup.max_downtime|default(rsnapshot_max_downtime) }}")
   lastuptimefile="/etc/rsnapshot/rsnapshot-{{ backup.name }}.lastuptime"
   lastuptime=$(cat "$lastuptimefile" 2>/dev/null || echo 0 )
   let downtime="$currtime - $lastuptime"
