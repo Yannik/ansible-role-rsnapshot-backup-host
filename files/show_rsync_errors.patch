@@ -7,4 +7,12 @@
  		);
  		syslog_warn(
  			"Some files and/or directories in $$bp_ref{'src'} only transferred partially during rsync operation"
-
+@@ -4209,7 +4209,7 @@
+ 
+ 	}
+ 	elsif (24 == $retval) {
+-		print_warn("Some files and/or directories in $$bp_ref{'src'} vanished during rsync operation", 4);
++		print_warn("Some files and/or directories in $$bp_ref{'src'} vanished during rsync operation", 2);
+ 		syslog_warn("Some files and/or directories in $$bp_ref{'src'} vanished during rsync operation");
+ 
+ 	}
