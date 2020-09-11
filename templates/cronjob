@@ -11,7 +11,7 @@ MAILTO={{ rsnapshot_mailto }}
 {% for backup in rsnapshot_backups %}
 {% if backup.enabled|default(True) %}
 {% for entry in backup.retain_settings %}
-{{ entry.cronjob }} root rsnapshot -c /etc/rsnapshot/rsnapshot-{{ backup.name }}.conf {{ entry.name }}
+{{ entry.cronjob }} root rsnapshot -c /etc/rsnapshot/rsnapshot-{{ backup.name }}.conf {{ entry.name }} &> /dev/null
 {% endfor %}
 
 {% endif %}
