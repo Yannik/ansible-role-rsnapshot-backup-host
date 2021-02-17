@@ -28,6 +28,8 @@ function time_to_secs {
     let secs="$valnum * 60 * 60"
   elif [[ "$val" == *d ]]; then
     let secs="$valnum * 60 * 60 * 24"
+  elif [[ "$val" == *w ]]; then
+    let secs="$valnum * 60 * 60 * 24 * 7"
   fi
   echo "$secs"
 }
