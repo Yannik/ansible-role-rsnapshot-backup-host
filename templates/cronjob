@@ -10,9 +10,6 @@ MAILTO={{ rsnapshot_mailto }}
 
 {% for backup in rsnapshot_backups %}
 {% if backup.enabled|default(True) %}
-{% for entry in backup.retain_settings %}
-{{ entry.cronjob }} root rsnapshot -c /etc/rsnapshot/rsnapshot-{{ backup.name }}.conf {{ entry.name }} &> /dev/null
-{% endfor %}
-
+*/5 * * * * root /etc/rsnapshot/rsnapshot-rotate-{{ backup.name }}.sh > >(tee -a /var/log/rsnapshot.log >/dev/null) 2> >(tee -a /var/log/rsnapshot.log >&2)
 {% endif %}
 {% endfor %}

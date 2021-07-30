@@ -28,6 +28,22 @@
   when: item.enabled|default(True)
   with_items: "{{ rsnapshot_backups }}"
 
+- name: Install functions.sh script
+  template:
+    src: functions.sh
+    dest: /etc/rsnapshot/functions.sh
+    mode: 0700
+
+- name: Generate rsnapshot-rotate.sh scripts
+  template:
+    src: rsnapshot-rotate.sh
+    dest: /etc/rsnapshot/rsnapshot-rotate-{{ backup.name }}.sh
+    mode: 0700
+  when: backup.enabled|default(True)
+  loop: "{{ rsnapshot_backups }}"
+  loop_control:
+    loop_var: backup
+
 - name: Add rsnapshot-run.sh script
   template:
     src: rsnapshot-run.sh
