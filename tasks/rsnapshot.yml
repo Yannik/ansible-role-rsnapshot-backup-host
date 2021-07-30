@@ -32,7 +32,7 @@
   template:
     src: rsnapshot-run.sh
     dest: /etc/rsnapshot/rsnapshot-run.sh
-    mode: 700
+    mode: 0700
 
 - name: Create rsnapshot cronjob (if enabled in config)
   template: src=cronjob dest=/etc/cron.d/rsnapshot-pull
