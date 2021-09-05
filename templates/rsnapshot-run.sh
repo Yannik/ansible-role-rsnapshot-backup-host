@@ -38,6 +38,7 @@ function run_sync {
   else
     echo "$currtime" > "$lastsync_file"
     log_info "Successfully synced"
+    /etc/rsnapshot/rsnapshot-rotate.sh
   fi
 }
 
