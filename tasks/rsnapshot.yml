@@ -50,6 +50,12 @@
     dest: /etc/rsnapshot/rsnapshot-run.sh
     mode: 0700
 
+- name: Add rsnapshot-rotate.sh script
+  template:
+    src: rsnapshot-rotate-all.sh
+    dest: /etc/rsnapshot/rsnapshot-rotate.sh
+    mode: 0700
+
 - name: Create rsnapshot cronjob (if enabled in config)
   template: src=cronjob dest=/etc/cron.d/rsnapshot-pull
   when: rsnapshot_enable_cron

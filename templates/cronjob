@@ -8,8 +8,4 @@ MAILTO={{ rsnapshot_mailto }}
 # this syntax only works with bash!
 */5 * * * * root /etc/rsnapshot/rsnapshot-run.sh > >(tee -a /var/log/rsnapshot.log >/dev/null) 2> >(tee -a /var/log/rsnapshot.log >&2)
 
-{% for backup in rsnapshot_backups %}
-{% if backup.enabled|default(True) %}
-*/5 * * * * root /etc/rsnapshot/rsnapshot-rotate-{{ backup.name }}.sh > >(tee -a /var/log/rsnapshot.log >/dev/null) 2> >(tee -a /var/log/rsnapshot.log >&2)
-{% endif %}
-{% endfor %}
+*/5 * * * * root /etc/rsnapshot/rsnapshot-rotate.sh > >(tee -a /var/log/rsnapshot.log >/dev/null) 2> >(tee -a /var/log/rsnapshot.log >&2)
