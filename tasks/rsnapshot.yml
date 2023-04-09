@@ -16,6 +16,9 @@
   template:
     src: ssh_config
     dest: /home/backuppuller/.ssh/config
+    owner: backuppuller
+    group: backuppuller
+    mode: "0600"
 
 - name: Create /etc/rsnapshot directory
   file: path=/etc/rsnapshot state=directory
@@ -64,8 +67,16 @@
   file: path=/etc/cron.d/rsnapshot-pull state=absent
   when: not rsnapshot_enable_cron
 
+- name: Ensure known_hosts exists and has correct permissions
+  file:
+    path: /home/backuppuller/.ssh/known_hosts
+    owner: backuppuller
+    group: backuppuller
+    state: file
+
 - name: Check that ssh to hosts works
   shell: ssh -o ConnectTimeout=1 {{ item.ssh_args|default(rsnapshot_ssh_args) }} {{ item.backup_host }} test
+  become_user: backuppuller
   with_items: "{{ rsnapshot_backups }}"
   when: item.backup_host is defined and item.enabled|default(True) and testing is not defined
   changed_when: False
