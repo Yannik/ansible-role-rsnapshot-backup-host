@@ -43,7 +43,7 @@ Example Playbook
 
     - hosts: all
       roles:
-         - role: Yannik/rsnapshot-backup-host
+         - role: yannik.rsnapshot-backup-host
            rsnapshot_enable_cron: True
            rsnapshot_mailto: test@example.org
            rsnapshot_custom_directives:
