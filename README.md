@@ -54,9 +54,9 @@ Example Playbook
                snapshot_root: /var/rsnapshot-backups/backups1
                backup_host: backupro@example.org
                retain_settings:
-                 - { name: every1h, keep: 12, cronjob: "30 * * * *" }
-                 - { name: every1d, keep: 3, cronjob: "35 3 * * *" }
-                 - { name: every1w, keep: 4, cronjob: "0 3 * * 1" }
+                 - { name: every1h, keep: 12 }
+                 - { name: every1d, keep: 3 }
+                 - { name: every1w, keep: 4 }
                backup_directives:
                  - src: /etc
                  - src: /var/www
@@ -69,8 +69,8 @@ Example Playbook
                snapshot_root: /var/rsnapshot-backups/backups2
                backup_host: backupro@example2.org
                retain_settings:
-                 - { name: every1d, keep: 3, cronjob: "35 3 * * *" }
-                 - { name: every1w, keep: 4, cronjob: "0 3 * * 1" }
+                 - { name: every1d, keep: 3 }
+                 - { name: every1w, keep: 4 }
                backup_directives:
                  - src: /etc
                    dest: myetc
