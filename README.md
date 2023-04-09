@@ -1,7 +1,5 @@
 Description
 =========
-[![Build Status](https://travis-ci.org/Yannik/ansible-role-rsnapshot-backup-host.svg?branch=master)](https://travis-ci.org/Yannik/ansible-role-rsnapshot-backup-host)
-
 Make incremental backups securely using rsnapshot.
 
 #### Why should backups always be pulled instead of being pushed?
