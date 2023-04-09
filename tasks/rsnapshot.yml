@@ -4,9 +4,14 @@
       - rsnapshot
       - patch
 
-- name: Patch rsnapshot to report rsync errors
+- name: Patch rsnapshot to report rsync errors (1)
   patch:
-    src: show_rsync_errors.patch
+    src: show_rsync_errors_1.patch
+    dest: /usr/bin/rsnapshot
+
+- name: Patch rsnapshot to report rsync errors (2)
+  patch:
+    src: show_rsync_errors_2.patch
     dest: /usr/bin/rsnapshot
 
 - name: Ensure backupuser exists
