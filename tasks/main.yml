@@ -1,2 +1,4 @@
 - import_tasks: rsnapshot.yml
-  tags: rsnapshot
+  tags:
+    - rsnapshot
+    - rsnapshot-backup-host
