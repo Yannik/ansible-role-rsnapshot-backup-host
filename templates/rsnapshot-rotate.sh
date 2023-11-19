@@ -17,15 +17,19 @@ lastsync_file="/etc/rsnapshot/rsnapshot-{{ backup.name }}.lastsuccess"
 
 {% if ns.previous_entry is defined %}
   rotate_from_dir="{{ backup.snapshot_root }}/{{ ns.previous_entry.name }}.{{ ns.previous_entry.keep-1 }}"
-{% else %}
-  rotate_from_dir="{{ backup.snapshot_root }}/.sync"
-{% endif %}
 
-if [ -d "$rotate_from_dir" ]; then
-  rotate_from_timestamp=$(stat -c %Y "$rotate_from_dir")
-else
-  rotate_from_timestamp=0
-fi
+  if [ -d "$rotate_from_dir" ]; then
+    rotate_from_timestamp=$(stat -c %Y "$rotate_from_dir")
+  else
+    rotate_from_timestamp=0
+  fi
+{% else %}
+  if [ -f "$lastsync_file" ]; then
+    rotate_from_timestamp=$(cat "$lastsync_file")
+  else
+    rotate_from_timestamp=0
+  fi
+{% endif %}
 
 current_newest="{{ backup.snapshot_root }}/{{ entry.name }}.0"
 if [ -d "$current_newest" ]; then
