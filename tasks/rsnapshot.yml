@@ -13,6 +13,7 @@
   patch:
     src: show_rsync_errors_2.patch
     dest: /usr/bin/rsnapshot
+    state: absent
 
 - name: Ensure backupuser exists
   user: name=backuppuller generate_ssh_key=yes
