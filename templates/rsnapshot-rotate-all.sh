@@ -12,6 +12,7 @@ pidfile="/var/run/rsnapshot-rotate.pid"
 if [ -f "$pidfile" ] && kill -0 $(cat "$pidfile"); then
   pid=$(cat "$pidfile")
   log_info "already rotating.. (pid: $pidfile)"
+  trap - EXIT
   exit
 fi
 
